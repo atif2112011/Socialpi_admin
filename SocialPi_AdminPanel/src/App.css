@@ -1,0 +1,33 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  
+}
+
+body{
+  background-color:#ECEEF8;
+}
+
+
+.menu{
+background-color: white;
+height:895px;
+width:323px;
+margin-right:20px;
+border: 1px solid #1F1F1F1A;
+border-radius: 5px;
+
+}
+
+.dashboard{
+  width:1513px;
+  height:auto;
+  background-color: white;
+  border: 1px solid #1F1F1F1A;
+  border-radius: 5px;
+  text-align: left;
+  padding:30px 30px;
+}
+
