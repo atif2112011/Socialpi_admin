@@ -3,19 +3,20 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Samplebuttons from '../components/Samplebuttons'
+import Maindash from './../components/Maindash';
+import Mainmenu from '../components/Mainmenu'
+
 function App() {
 
 
   return (
-   <Samplebuttons/>
-  // <div class='flex'>
-  //   <div class='flex-col menu'>
+  //  <Samplebuttons/>
+  <div class='flex'>
+   
+    <Mainmenu/>
+    <Maindash/>
 
-  //   </div>
-  //   <div class='flex-col dashboard'>
-  //     <h1>Admin Dashboard</h1>
-  //   </div>
-  // </div>
+  </div>
   )
 }
 
