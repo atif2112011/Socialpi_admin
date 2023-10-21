@@ -39,7 +39,7 @@ function Samplebuttons(){
         </div>
           </div>
           <h1>Medium</h1>
-          <div class="flex">
+          <div class="flex ">
           <div class="flex-col">
           <button class="btn-primary-medium-text">Button</button>
           

@@ -29,7 +29,7 @@ useEffect(()=>{
   return (
     <div class='flex-col dashboard'>
       <h1>Admin Dashboard</h1>
-      {loggedin?<Admindash loggedin={loggedin} setLoggedin={setLoggedin}/>:<Login/>}
+      {loggedin?<Admindash loggedin={loggedin} setLoggedin={setLoggedin}/>:<Login loggedin={loggedin} setLoggedin={setLoggedin}/>}
       
     </div>
   )

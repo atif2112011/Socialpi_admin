@@ -34,7 +34,7 @@ border-radius: 5px;
 
 .login{
    
-    background: linear-gradient(350.13deg, #2F69FF 6.15%, #164EDE 94.61%);
+    background: linear-gradient(350.13deg, #a2b9f3 6.15%, #164EDE 94.61%);
 
     height:500px;
     border-radius: 15px;
@@ -67,3 +67,30 @@ border-radius: 5px;
 .login-footer{
   text-align: center;
 }
+
+.popup-content {
+  margin: auto;
+  background: rgb(255, 255, 255);
+  width: 25%;
+  height:50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+
+}
+
+.popup-arrow {
+  color: rgb(255, 255, 255);
+}
+/* [role='tooltip'].popup-content {
+  width: 100px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+} */
+
+.popup-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+/* [data-popup='tooltip'].popup-overlay {
+  background: transparent;
+} */
