@@ -6,6 +6,7 @@ import Popup from 'reactjs-popup';
 
 function Login({loggedin,setLoggedin}) {
  const [showpopup,setShowpopup]=useState(false)
+ const [isadmin,setIsadmin]=useState(false);
   
   const auth = getAuth();
   const GoogleProvider= new GoogleAuthProvider();
@@ -16,42 +17,33 @@ const closePopup=()=>{
 }
 
 
-const verifyAdmin=(data)=>{
-  const q = query(collectionRef, where("email", "==", `${data.email}`));
-  getDocs(q)
-  .then((querySnapshot)=>{
-    if (!querySnapshot.empty) {
-      console.log("Valid Admin")
-      return true;
-    } else {
-      console.log('Not Valid Admin');
-      return false;
 
-    }
-  })
-  .catch((error)=>{
-    alert(error.message)
-  })
-  
- }
-  const handleLogin=()=>{
+
+  const handleLogin=async ()=>{
         
     signInWithPopup(auth, GoogleProvider)
-      .then(async (userCredential) => {
+      .then((userCredential) => {
         // alert('Login Success')
         const userData={
           name:userCredential.user.displayName,
           email:userCredential.user.email
         }
         console.log(userData);
-        const isAdmin=await verifyAdmin(userData);
-        if(isAdmin==false)
-        {
-        signOut(auth);
-        setLoggedin(false);
-        setShowpopup(true);
-        }
-       
+
+        const q = query(collectionRef, where("email", "==", `${userData.email}`));
+  getDocs(q)
+  .then((querySnapshot)=>{
+    if (!querySnapshot.empty) {
+      console.log("Valid Admin")
+      setLoggedin(true)
+    } else {
+      console.log('Not Valid Admin');
+      signOut(auth);
+      setLoggedin(false);
+      setShowpopup(true);
+
+    }
+  })
 
       })
       .catch((error) => {
@@ -60,13 +52,16 @@ const verifyAdmin=(data)=>{
         
         
       });
+
+     const response=await verifyAdmin(userData);
+
     }
 
     const PopupExample = () => (
       <Popup open={showpopup} position="right center" closeOnDocumentClick onClose={closePopup}>
         <div class="modal">
           <a class='close' onClick={closePopup}>
-          No Admin Privileges!!
+          No Admin Privileges found!!
           </a>
         </div>
       </Popup>
