@@ -4,9 +4,9 @@ import {getAuth,GoogleAuthProvider,signInWithPopup, signOut} from 'firebase/auth
 import { collection, addDoc ,getDocs, updateDoc, doc, deleteDoc, onSnapshot,query,where, getDoc, Query} from "firebase/firestore";
 import Popup from 'reactjs-popup';
 
-function Login({loggedin,setLoggedin}) {
+function Login({loggedin,setLoggedin,wait,setWait}) {
  const [showpopup,setShowpopup]=useState(false)
- const [isadmin,setIsadmin]=useState(false);
+ 
   
   const auth = getAuth();
   const GoogleProvider= new GoogleAuthProvider();
@@ -20,10 +20,14 @@ const closePopup=()=>{
 
 
   const handleLogin=async ()=>{
-        
+    
+    
+       
     signInWithPopup(auth, GoogleProvider)
       .then((userCredential) => {
         // alert('Login Success')
+        setWait(true); 
+        console.log('Wait:',wait)
         const userData={
           name:userCredential.user.displayName,
           email:userCredential.user.email
@@ -43,6 +47,7 @@ const closePopup=()=>{
       setShowpopup(true);
 
     }
+    setWait(false);
   })
 
       })

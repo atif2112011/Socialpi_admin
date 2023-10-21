@@ -5,16 +5,18 @@ import './App.css'
 import Samplebuttons from '../components/Samplebuttons'
 import Maindash from './../components/Maindash';
 import Mainmenu from '../components/Mainmenu'
+import Spinner from '../components/Spinner'
 
 function App() {
+  const [loader,setLoader]=useState(false)
 
 
   return (
   //  <Samplebuttons/>
   <div class='flex'>
-   
-    <Mainmenu/>
-    <Maindash/>
+    {loader && <Spinner/>}
+    <Mainmenu setLoader={setLoader}/>
+    <Maindash setLoader={setLoader}/>
 
   </div>
   )
