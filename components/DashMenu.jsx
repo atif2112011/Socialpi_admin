@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Mainmenu() {
+function DashMenu() {
   return (
     <div class='flex-col menu'>
 
@@ -8,4 +8,4 @@ function Mainmenu() {
   )
 }
 
-export default Mainmenu
+export default DashMenu

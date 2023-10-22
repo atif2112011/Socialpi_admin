@@ -1,7 +1,6 @@
 #root {
-  max-width: 1280px;
+  height: var(--full-viewport-height);
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
   
 }
@@ -13,35 +12,37 @@ body{
 
 .menu{
 background-color: white;
-height:895px;
-width:323px;
+height:650px;
+width:250px;
 margin-right:20px;
 border: 1px solid #1F1F1F1A;
-border-radius: 5px;
+border-radius: 12px;
 
 }
 
 
 .dashboard{
-  width:1513px;
-  height:auto;
+  width:1200px;
+  height:650px;
   background-color: white;
   border: 1px solid #1F1F1F1A;
-  border-radius: 5px;
+  border-radius: 12px;
   text-align: left;
-  padding:30px 30px;
+  /* padding:30px 30px; */
 }
 
 .login{
    
     background: linear-gradient(350.13deg, #a2b9f3 6.15%, #164EDE 94.61%);
 
-    height:500px;
+    height:636px;
+    width:1436px;
     border-radius: 15px;
   
     padding:30px 30px;
     justify-content: center;
     align-items: center;
+    margin:0 0 0 0;
     
     
 }
