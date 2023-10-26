@@ -53,7 +53,12 @@ function DashMenu({selectedOption,setSelectedOption}) {
               return <li 
               key={value.name} 
               onClick={()=>handleClick(value.name)}
-              style={{ backgroundColor: value.name === selectedOption ? '#e9ecff' : 'white' }}
+              style={{
+                backgroundColor: value.name === selectedOption ? '#e9ecff' : 'white',
+                display: 'flex', // Add this line
+                alignItems: 'center', // Add this line
+                padding: '8px' // Adjust padding as needed
+              }}
               >
                 <img class="menu_icon" src={value.icon} height='20px' width='20px'></img> 
                 {value.name} 

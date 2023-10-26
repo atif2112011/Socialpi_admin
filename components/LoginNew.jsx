@@ -34,8 +34,25 @@ const checkAdmin=(user)=>{
   getDocs(q)
   .then((querySnapshot)=>{
     if (!querySnapshot.empty) {
+
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+
+        const Userdata=doc.data();
+        
+        const user={
+          id:doc.id,
+          ...Userdata
+        }
+
+        console.log(doc.id, " => ", user);
+
+        dispatch(SetCurrentUser(user))
+        
+      });
+
       console.log("Valid Admin")
-      dispatch(SetCurrentUser('SuperAdmin'));
+      // dispatch(SetCurrentUser('SuperAdmin'));
     
       navigate('/dashboard');
       dispatch(SetLoader(false));

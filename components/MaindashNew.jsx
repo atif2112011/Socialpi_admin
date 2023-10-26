@@ -6,7 +6,7 @@ import {SetLoader} from '../redux/loadersSlice'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
 import { SetCurrentUser } from '../redux/userSlice'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { collection, doc, getDocs, query, where } from 'firebase/firestore'
 import { database } from '../src/firebaseConfig'
 
 
@@ -19,14 +19,31 @@ function Maindash() {
   const collectionRef=collection(database,'admins')
   const {CurrentUser}=useSelector(state=>state.users)
   const [selectedOption,setSelectedOption]=useState('Admins')
+  
   const checkAdmin=(user)=>{
     console.log('Inside Dash checkadmin')
     const q = query(collectionRef, where("email", "==", `${user.email}`));
     getDocs(q)
     .then((querySnapshot)=>{
       if (!querySnapshot.empty) {
+
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+  
+          const Userdata=doc.data();
+          
+          const user={
+            id:doc.id,
+            ...Userdata
+          }
+  
+          console.log(doc.id, " => ", user);
+  
+          dispatch(SetCurrentUser(user))
+          
+        });
         console.log("Valid Admin")
-        dispatch(SetCurrentUser('SuperAdmin'));
+        // dispatch(SetCurrentUser('SuperAdmin'));
       
         navigate('/dashboard');
         dispatch(SetLoader(false));
@@ -42,6 +59,22 @@ function Maindash() {
       }
     })
     
+  }
+
+  const populateAdmins=async ()=>{
+    const querySnapshot = await getDocs(collection(database, "admins"));
+    console.log("Fetched Admins:")
+    querySnapshot.forEach((doc) => {
+  // doc.data() is never undefined for query doc snapshots
+  const newAdmin=doc.data();
+  const existingAdmins=admins;
+  existingAdmins.push(newAdmin)
+  
+  setAdmins(existingAdmins);
+  console.log(doc.id, " => ", doc.data());
+});
+console.log("Updated Admins",admins) 
+SetshowTable(true);
   }
 
   useEffect(() => {
@@ -71,7 +104,7 @@ function Maindash() {
   return (
     <div class='flex maindash' >
         <DashMenu selectedOption={selectedOption} setSelectedOption={setSelectedOption}/>
-        <DashBody/>
+        <DashBody selectedOption={selectedOption} setSelectedOption={setSelectedOption}/>
 
     </div>
   )

@@ -72,7 +72,7 @@ button:hover {
   border-radius: 100px;
   border: 1px solid transparent;
   height: 36px;
-  width: 73px;
+  /* width: 73px; */
   color:white;
   /* padding: 0.6em 1.2em; */
   font-size: 12px;
@@ -88,7 +88,7 @@ button:hover {
   border-radius: 100px;
   border: 1px solid transparent;
   height: 36px;
-  width: 36px;
+  /* width: 36px; */
   color:white;
   font-size: 12px;
   font-weight: 600;
@@ -105,13 +105,17 @@ button:hover {
   border-radius: 100px;
   border: 1px solid transparent;
   height: 36px;
-  width: 95px;
+  /* width: 95px; */
   color:white;
   font-size: 12px;
   font-weight: 600;
   font-family: poppins;
-  padding: 8px 16px 8px 16px;
+  /* padding: 8px 16px 8px 16px; */
   /* padding: 0.6em 1.2em; */
+  padding-left: 20px;
+  display:flex;
+  gap:6px;
+  align-items: center;
   
   background-color: #1a1a1a;
   cursor: pointer;
@@ -123,7 +127,7 @@ button:hover {
   border-radius: 100px;
   border: 1px solid transparent;
   height: 36px;
-  width: 73px;
+  /* width: 73px; */
   color:rgb(0, 0, 0);
   /* padding: 0.6em 1.2em; */
   font-size: 12px;
@@ -139,7 +143,7 @@ button:hover {
   border-radius: 100px;
   border: 1px solid transparent;
   height: 36px;
-  width: 36px;
+  /* width: 36px; */
   color:black;
   font-size: 12px;
   font-weight: 600;
@@ -156,8 +160,11 @@ button:hover {
   border-radius: 100px;
   border: 1px solid transparent;
   height: 36px;
-  width: 95px;
+  /* width: 95px; */
   color:rgb(0, 0, 0);
+  display:flex;
+  gap:6px;
+  align-items: center;
   font-size: 12px;
   font-weight: 600;
   font-family: poppins;
@@ -173,7 +180,7 @@ button:hover {
   border-radius: 100px;
   border: 1px solid transparent;
   height: 36px;
-  width: 73px;
+  /* width: 73px; */
   color:rgb(0, 0, 0);
   /* padding: 0.6em 1.2em; */
   font-size: 12px;
@@ -189,7 +196,7 @@ button:hover {
   border-radius: 100px;
   border: 1px solid transparent;
   height: 36px;
-  width: 36px;
+  /* width: 36px; */
   color:black;
   font-size: 12px;
   font-weight: 600;
@@ -206,13 +213,16 @@ button:hover {
   border-radius: 100px;
   border: 1px solid transparent;
   height: 36px;
-  width: 95px;
+  /* width: 95px; */
   color:rgb(0, 0, 0);
   font-size: 12px;
   font-weight: 600;
   font-family: poppins;
   padding: 8px 16px 8px 16px;
   /* padding: 0.6em 1.2em; */
+  display:flex;
+  gap:6px;
+  align-items: center;
   
   background-color: white;
   cursor: pointer;
@@ -224,7 +234,7 @@ button:hover {
   border-radius: 32px;
   border: 1px solid transparent;
   height: 44px;
-  width: 81px;
+  /* width: 81px; */
   color:white;
   /* padding: 0.6em 1.2em; */
   font-size: 12px;
@@ -240,7 +250,7 @@ button:hover {
   border-radius: 32px;
   border: 1px solid transparent;
   height: 44px;
-  width: 44px;
+  /* width: 44px; */
   color:white;
   font-size: 12px;
   font-weight: 600;
@@ -257,13 +267,17 @@ button:hover {
   border-radius: 32px;
   border: 1px solid transparent;
   height: 44px;
-  width: 103px;
+  /* width: 103px; */
   color:white;
   font-size: 12px;
   font-weight: 600;
   font-family: poppins;
   /* padding: 14px 20px 14px 20px; */
+  padding-left: 20px;
   /* padding: 0.6em 1.2em; */
+  display:flex;
+  gap:6px;
+  align-items: center;
   
   background-color: #1a1a1a;
   cursor: pointer;
@@ -275,7 +289,7 @@ button:hover {
   border-radius: 32px;
   border: 1px solid transparent;
   height: 44px;
-  width: 81px;
+  /* width: 81px; */
   color:black;
   /* padding: 0.6em 1.2em; */
   font-size: 12px;
@@ -291,7 +305,7 @@ button:hover {
   border-radius: 32px;
   border: 1px solid transparent;
   height: 44px;
-  width: 44px;
+  /* width: 44px; */
   color:black;
   font-size: 12px;
   font-weight: 600;
@@ -307,13 +321,18 @@ button:hover {
   border-radius: 32px;
   border: 1px solid transparent;
   height: 44px;
-  width: 103px;
+  /* width: 103px; */
+  display:flex;
+  align-items: center;
+  gap:6px;
   color:black;
   font-size: 12px;
   font-weight: 600;
   font-family: poppins;
   /* padding: 14px 20px 14px 20px; */
-  /* padding: 0.6em 1.2em; */
+  padding-left: 20px;
+  /* padding-right: 14px; */
+  
   
   background-color: #f4f4f4;
   cursor: pointer;
@@ -324,7 +343,7 @@ button:hover {
   border-radius: 32px;
   border: 1px solid transparent;
   height: 44px;
-  width: 81px;
+  /* width: 81px; */
   color:black;
   /* padding: 0.6em 1.2em; */
   font-size: 12px;
@@ -340,7 +359,7 @@ button:hover {
   border-radius: 32px;
   border: 1px solid transparent;
   height: 44px;
-  width: 44px;
+  /* width: 44px; */
   color:black;
   font-size: 12px;
   font-weight: 600;
@@ -357,10 +376,13 @@ button:hover {
   border-radius: 32px;
   border: 1px solid transparent;
   height: 44px;
-  width: 103px;
+  /* width: 103px; */
   color:black;
   font-size: 12px;
   font-weight: 600;
+  display:flex;
+  gap:6px;
+  align-items: center;
   font-family: poppins;
   /* padding: 14px 20px 14px 20px; */
   /* padding: 0.6em 1.2em; */
@@ -383,5 +405,4 @@ button:hover {
   flex-direction: row;
   gap:5px;
 }
-
 
