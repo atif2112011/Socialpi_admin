@@ -46,6 +46,7 @@ const checkAdmin=(user)=>{
       signOut(auth);
       setShowpopup(true);
       dispatch(SetLoader(false));
+
       
 
     }
@@ -94,6 +95,8 @@ const checkAdmin=(user)=>{
 
 
     useEffect(()=>{
+      // dispatch(SetLoader(true));
+
       onAuthStateChanged(auth, (user) => {
         if (user) {
           // User is signed in, see docs for a list of available properties
@@ -115,6 +118,7 @@ const checkAdmin=(user)=>{
         } else {
           // User is signed out
           // ...
+          // dispatch(SetLoader(false))
         }
       });
     })

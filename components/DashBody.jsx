@@ -1,22 +1,25 @@
 import { getAuth, signOut } from 'firebase/auth'
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-function Admindash() {
+function DashBody() {
     const navigate=useNavigate();
     const auth=getAuth();
-    const handleLogout=async ()=>{
-        await signOut(auth);
-        navigate('/');
-      }
+    const {CurrentUser}=useSelector(state=>state.users)
+
+    
 
   return (
     <div>
     <div class='flex-col dashboard'>
-    <button class="btn-secondary-medium-text" onClick={handleLogout}>SignOut</button></div>
+    <h1>Admins</h1>
+    <span>Admin Type:{CurrentUser}</span>
+    {console.log('User',CurrentUser)}
+    </div>
     
     </div>
   )
 }
 
-export default Admindash
+export default DashBody

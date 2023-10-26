@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import DashMenu from './DashMenu'
-import Admindash from './Admindash'
+import DashBody from './DashBody'
 import { useDispatch, useSelector } from 'react-redux'
 import {SetLoader} from '../redux/loadersSlice'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { SetCurrentUser } from '../redux/userSlice'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { database } from '../src/firebaseConfig'
+
 
 function Maindash() {
 
@@ -17,7 +18,7 @@ function Maindash() {
   const dispatch=useDispatch();
   const collectionRef=collection(database,'admins')
   const {CurrentUser}=useSelector(state=>state.users)
-
+  const [selectedOption,setSelectedOption]=useState('Admins')
   const checkAdmin=(user)=>{
     console.log('Inside Dash checkadmin')
     const q = query(collectionRef, where("email", "==", `${user.email}`));
@@ -44,6 +45,8 @@ function Maindash() {
   }
 
   useEffect(() => {
+    dispatch(SetLoader(true));
+
     console.log('inside dahsboard useEffect')
     const unsubscribe = auth.onAuthStateChanged(user => {
       console.log("Inside dashbaord onauth")
@@ -51,6 +54,7 @@ function Maindash() {
         
         if(CurrentUser==null)
         {
+          dispatch(SetLoader(true));
           checkAdmin(user)
         }
        
@@ -58,15 +62,16 @@ function Maindash() {
       } else {
      
         navigate('/');
+        dispatch(SetLoader(false))
       }
     });
     return () => unsubscribe(); // Cleanup the subscription on component unmount
   }, []);
   
   return (
-    <div class='flex ' >
-        <DashMenu/>
-        <Admindash/>
+    <div class='flex maindash' >
+        <DashMenu selectedOption={selectedOption} setSelectedOption={setSelectedOption}/>
+        <DashBody/>
 
     </div>
   )
