@@ -42,7 +42,7 @@ SetshowTable(true);
       <h1>Admins</h1>
       <div class='flex '>
         <button class='btn-primary-small-button-icon'
-        hidden={CurrentUser.superadmin?true:false}
+        disabled={!CurrentUser.superadmin}
         >Add Admin
         <img class="menu_icon" src='../media/icons/add.svg' height='20px' width='20px' style={{filter: 'invert(1)'}}></img>
          </button>
