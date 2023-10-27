@@ -68,7 +68,7 @@ function DashMenu({selectedOption,setSelectedOption}) {
 
       </div>
           <div>
-          <button class="btn-primary-medium-text menusignout" onClick={handleLogout}>Sign Out</button>
+          <button class="btn-primary-small-text menusignout" onClick={handleLogout}>Sign Out</button>
           </div>
       
 

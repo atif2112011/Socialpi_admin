@@ -92,7 +92,7 @@ const checkAdmin=(user)=>{
         signOut(auth);
         alert(error.message);
         
-        
+            
       });
 
 

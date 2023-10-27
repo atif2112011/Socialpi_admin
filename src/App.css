@@ -213,3 +213,57 @@ td,th{
   padding:5px 5px 5px 5px;
   width:150px;
 }
+
+form{
+
+  font-size: medium;
+}
+
+
+.Modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 10px 30px 20px 30px;
+  width: 30%;
+  border-radius: 12px;
+  border: 2px solid rgb(217, 216, 216);
+  
+}
+
+input{
+  display:block;
+  /* width:100%; */
+  height:25px;
+  margin-top: 7px;
+
+}
+
+.admin_form{
+  gap:20px!important
+}
+
+
+.form_input{
+  /* height:min-content; */
+ border-radius: 2px;
+ background-color: #EDF3F4;
+ padding: 5px 0px 5px 5px;
+ border-width: 0;
+ width: 100%;
+}
+
+.form_input_checkbox{
+  
+ /* border-radius: 2px; */
+ background-color: #f0f0f0;
+  height:25px;
+  width:25px;
+}
+
+.checkbox_div{
+  align-items: center;
+}
