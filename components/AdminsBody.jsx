@@ -1,15 +1,17 @@
 import { getAuth, signOut } from 'firebase/auth'
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import { QuerySnapshot, addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { database } from '../src/firebaseConfig';
 import Modal from 'react-modal'
+import { SetLoader } from '../redux/loadersSlice';
 
 function AdminsBody() {
 
     const navigate=useNavigate();
     const auth=getAuth();
+    const dispatch=useDispatch()
     const {CurrentUser}=useSelector(state=>state.users)
     
    const [admins,setAdmins]=useState([]);
@@ -73,13 +75,29 @@ function AdminsBody() {
             
         }
 
-        
-        
-        const docRef = await addDoc(collection(database, "admins"),UserData);
+        const q = query(collectionRef, where("email", "==", `${UserData.email}`));
+
+        getDocs(q)
+        .then(async (querySnapshot)=>{
+          if(!querySnapshot.empty){
+              alert("Email Already Exists!!")
+              
+              document.getElementById("admin_email").focus();
+
+          }
+          else
+          {
+            const docRef = await addDoc(collection(database, "admins"),UserData);
           console.log("Document written with ID: ", docRef.id);
 
           closeModal();
-        await populateAdmins();
+          dispatch(SetLoader(true));
+          await populateAdmins();
+          dispatch(SetLoader(false));
+          }
+        })
+        
+        
         
         
 
