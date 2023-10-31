@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { database } from '../src/firebaseConfig';
 import Modal from 'react-modal'
 
-function AdminsBody({selectedOption,SetSelectedOption}) {
+function AdminsBody() {
 
     const navigate=useNavigate();
     const auth=getAuth();
@@ -18,22 +18,41 @@ function AdminsBody({selectedOption,SetSelectedOption}) {
 
    const collectionRef=collection(database,'admins')
 
-    const populateAdmins=async ()=>{
-        const querySnapshot = await getDocs(collection(database, "admins"));
-        console.log("Fetched Admins:")
-        querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      var newAdmin=doc.data();
-      const existingAdmins=admins;
-      newAdmin={...newAdmin,...{id:doc.id}}
-      existingAdmins.push(newAdmin)
+    // const populateAdmins=async ()=>{
+    //     SetshowTable(false);
+    //     setAdmins([]);
+    //     const querySnapshot = await getDocs(collection(database, "admins"));
+    //     console.log("Fetched Admins:")
+    //     querySnapshot.forEach((doc) => {
+    //   // doc.data() is never undefined for query doc snapshots
+    //   var newAdmin=doc.data();
+    //   const existingAdmins=admins;
+    //   newAdmin={...newAdmin,...{id:doc.id}}
+    //   existingAdmins.push(newAdmin)
       
-      setAdmins(existingAdmins);
-      console.log(doc.id, " => ", doc.data());
-    });
-    console.log("Updated Admins",admins) 
-    SetshowTable(true);
-      }
+    //   setAdmins(existingAdmins);
+    //   console.log(doc.id, " => ", doc.data());
+    // });
+    // console.log("Updated Admins",admins) 
+    // SetshowTable(true);
+    //   }
+  
+    const populateAdmins = async () => {
+      SetshowTable(false);
+      setAdmins([]);
+      const querySnapshot = await getDocs(collection(database, "admins"));
+      console.log("Fetched Admins:")
+      let newAdmins = [];
+      querySnapshot.forEach((doc) => {
+          var newAdmin = doc.data();
+          newAdmin = { ...newAdmin, ...{ id: doc.id } };
+          newAdmins.push(newAdmin);
+          console.log(doc.id, " => ", doc.data());
+      });
+      setAdmins(prevAdmins => [...prevAdmins, ...newAdmins]); // Use functional update
+      console.log("Updated Admins", admins);
+      SetshowTable(true);
+  }
 
     const AddAdminButtonAction =()=>{
         console.log('button Clicked')
@@ -53,11 +72,14 @@ function AdminsBody({selectedOption,SetSelectedOption}) {
             superadmin:superadmin
             
         }
+
+        
+        
         const docRef = await addDoc(collection(database, "admins"),UserData);
           console.log("Document written with ID: ", docRef.id);
 
-        populateAdmins();
-        closeModal();
+          closeModal();
+        await populateAdmins();
         
         
 
