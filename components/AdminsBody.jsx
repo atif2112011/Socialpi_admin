@@ -11,37 +11,40 @@ function AdminsBody() {
 
     const navigate=useNavigate();
     const auth=getAuth();
-    const dispatch=useDispatch()
     const {CurrentUser}=useSelector(state=>state.users)
+    const dispatch=useDispatch()
     
    const [admins,setAdmins]=useState([]);
    const [showTable,SetshowTable]=useState(false);
    const [modalIsOpen, SetmodalIsOpen] = useState(false);
+   const [tableData,SettableData]=useState([])
 
    const collectionRef=collection(database,'admins')
 
-    // const populateAdmins=async ()=>{
-    //     SetshowTable(false);
-    //     setAdmins([]);
-    //     const querySnapshot = await getDocs(collection(database, "admins"));
-    //     console.log("Fetched Admins:")
-    //     querySnapshot.forEach((doc) => {
-    //   // doc.data() is never undefined for query doc snapshots
-    //   var newAdmin=doc.data();
-    //   const existingAdmins=admins;
-    //   newAdmin={...newAdmin,...{id:doc.id}}
-    //   existingAdmins.push(newAdmin)
-      
-    //   setAdmins(existingAdmins);
-    //   console.log(doc.id, " => ", doc.data());
-    // });
-    // console.log("Updated Admins",admins) 
-    // SetshowTable(true);
-    //   }
+    
+
+    const  SearchHandler = (e) => {
+      //convert input text to lower case
+      const lowerCase = e.target.value.toLowerCase();
+      // SetsearchText(lowerCase);
+      const filteredData = admins.filter((value) => {
+        //if no input the return the original
+        if (lowerCase === '') {
+            return value;
+        }
+        //return the item which contains the user input
+        else {
+            return value.name.toLowerCase().includes(lowerCase)
+        }
+    })
+    SettableData(filteredData);
+    console.log('Searched Data: ',filteredData)
+    };
   
     const populateAdmins = async () => {
       SetshowTable(false);
       setAdmins([]);
+      SettableData([]);
       const querySnapshot = await getDocs(collection(database, "admins"));
       console.log("Fetched Admins:")
       let newAdmins = [];
@@ -51,9 +54,15 @@ function AdminsBody() {
           newAdmins.push(newAdmin);
           console.log(doc.id, " => ", doc.data());
       });
-      setAdmins(prevAdmins => [...prevAdmins, ...newAdmins]); // Use functional update
+      await setAdmins(prevAdmins => [...prevAdmins, ...newAdmins]); // Used for keeping record of all admins
+      await SettableData(prevAdmins => [...prevAdmins, ...newAdmins]); // used for querying table data
       console.log("Updated Admins", admins);
+
+    
       SetshowTable(true);
+
+      
+    
   }
 
     const AddAdminButtonAction =()=>{
@@ -144,12 +153,12 @@ function AdminsBody() {
         <div class='flex-col admin_form'>
             <div class>
             <label htmlFor='admin_name'>Admin Name :</label>
-            <input class='form_input' type='text' name='name' id='admin_name'></input>
+            <input class='form_input' type='text' name='name' id='admin_name' required='true'></input>
             </div>
 
             <div class>
             <label htmlFor='admin_email'>Email :</label>
-            <input class='form_input' type='email' name='email' id='admin_email'></input>
+            <input class='form_input' type='email' name='email' id='admin_email' required='true'></input>
             </div>
 
             <div class ='flex checkbox_div'>
@@ -173,14 +182,14 @@ function AdminsBody() {
         >Add Admin
         <img class="menu_icon" src='../media/icons/add.svg' height='20px' width='20px' style={{filter: 'invert(1)'}}></img>
          </button>
-        <input class='search_admin'type='text' placeholder='Search Admins....' onChange={(e)=>queryDB(e)}></input>
+        <input class='search_admin'type='text' placeholder='Search Admins....' onChange={(e)=>SearchHandler(e)}></input>
       </div>
 
     </div>
 
     <div class='admin_table'
     >
-      {showTable &&<table>
+      {showTable && <table>
         <thead>
         <tr>
             <th>Admins</th>
@@ -198,7 +207,7 @@ function AdminsBody() {
             <td>Yes</td>
             <td>-</td>
         </tr> */}
-        {admins.map((value)=>{
+        {tableData.map((value)=>{
           return(
             <tr>
               <td>{value.name}</td>
