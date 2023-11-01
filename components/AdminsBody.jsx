@@ -1,11 +1,13 @@
 import { getAuth, signOut } from 'firebase/auth'
-import { QuerySnapshot, addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import { QuerySnapshot, addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { database } from '../src/firebaseConfig';
 import Modal from 'react-modal'
 import { SetLoader } from '../redux/loadersSlice';
+import ReactSwitch from 'react-switch';
+
 
 function AdminsBody() {
 
@@ -17,6 +19,8 @@ function AdminsBody() {
    const [admins,setAdmins]=useState([]);
    const [showTable,SetshowTable]=useState(false);
    const [modalIsOpen, SetmodalIsOpen] = useState(false);
+   const [UpdatemodalIsOpen, SetUpdatemodalIsOpen] = useState(false);
+   const [adminToUpdate,SetadminToUpdate]=useState({})
    const [tableData,SettableData]=useState([])
 
    const collectionRef=collection(database,'admins')
@@ -60,9 +64,51 @@ function AdminsBody() {
 
     
       SetshowTable(true);
+      dispatch(SetLoader(false));
 
       
     
+  }
+
+  const updateDB=(userId,payload)=>{
+
+    const Ref = doc(database, "admins", userId);
+      
+    updateDoc(Ref,payload
+      )
+      .then((response)=>{
+        console.log("Data Updated")
+         populateAdmins();
+         closeModal();
+         
+         
+         
+        })
+        .catch((err)=>{
+          alert(err.message)
+          
+        })
+        
+        
+    
+  }
+
+  const deleteDB=(userId)=>{
+    dispatch(SetLoader(true))
+    const Ref = doc(database, "admins", userId);
+    deleteDoc(Ref
+      )
+      .then((response)=>{
+        console.log("Data Deleted")
+         populateAdmins();
+         
+         
+         
+        })
+        .catch((err)=>{
+          alert(err.message)
+          
+        })
   }
 
     const AddAdminButtonAction =()=>{
@@ -70,7 +116,7 @@ function AdminsBody() {
         SetmodalIsOpen(true)
     } 
    
-    const handleSubmit=async(event)=>{
+    const handleFormSubmit=async(event)=>{
     event.preventDefault(); // Prevents the default form submission behavior
 
   const formData = new FormData(event.target); // 
@@ -80,7 +126,8 @@ function AdminsBody() {
         const UserData={
             name:formData.get('name'),
             email:formData.get('email'),
-            superadmin:superadmin
+            superadmin:superadmin,
+            active:true
             
         }
 
@@ -111,28 +158,71 @@ function AdminsBody() {
         
 
     }
+
+    const handleUpdateFormSubmit=async(event)=>{
+      event.preventDefault(); // Prevents the default form submission behavior
+  
+    const formData = new FormData(event.target); // 
+    var superadmin = formData.get('superadmin'); // Get the value of the 'superadmin' checkbox
+    superadmin==null?superadmin=false:superadmin=true
+  
+          const UserData={
+              name:formData.get('name'),
+              email:formData.get('email'),
+              superadmin:superadmin,
+
+              
+          }
+
+          await updateDB(adminToUpdate.id,UserData)
+           
+          
+
+          
+          
+          
+          
+          
+  
+      }
+      
+
+    const handleReactSwitch=async(checked,id)=>{
+      dispatch(SetLoader(true))
+      
+      
+      
+      const DatatoUpdate={
+        active:checked
+      }
+    await updateDB(id,DatatoUpdate)
+    
+      
+    }
       
     function closeModal() {
     SetmodalIsOpen(false);
+    SetUpdatemodalIsOpen(false)
     }
 
-    const queryDB=async(e)=>{
+
+    // const queryDB=async(e)=>{
        
-        const value=e.target.value;
-        console.log("Value",value)
+    //     const value=e.target.value;
+    //     console.log("Value",value)
 
-        const q = query(collectionRef, where("name", "==", `${value}`)); 
+    //     const q = query(collectionRef, where("name", "==", `${value}`)); 
 
-        try {
-            const querySnapshot = await getDocs(q);
-            console.log('Queried Data');
-            querySnapshot.forEach((doc) => {
-              console.log(doc.id , " => ", doc.data());
-            });
-          } catch (error) {
-            console.error("Error querying data:", error);
-          }
-    }
+    //     try {
+    //         const querySnapshot = await getDocs(q);
+    //         console.log('Queried Data');
+    //         querySnapshot.forEach((doc) => {
+    //           console.log(doc.id , " => ", doc.data());
+    //         });
+    //       } catch (error) {
+    //         console.error("Error querying data:", error);
+    //       }
+    // }
 
     useEffect(()=>{
         populateAdmins();
@@ -149,7 +239,7 @@ function AdminsBody() {
         className="Modal"
       >
         <h2>Add New Admin</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleFormSubmit}>
         <div class='flex-col admin_form'>
             <div class>
             <label htmlFor='admin_name'>Admin Name :</label>
@@ -174,6 +264,38 @@ function AdminsBody() {
         </form>
         
       </Modal>
+      <Modal
+        isOpen={UpdatemodalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Update AdminModal"
+        className="Modal"
+      >
+        <h2>Update Admin</h2>
+        <form onSubmit={handleUpdateFormSubmit}>
+        <div class='flex-col admin_form'>
+            <div class>
+            <label htmlFor='admin_name'>Admin Name :</label>
+            <input class='form_input' type='text' name='name' id='admin_name' required='true' placeholder={adminToUpdate.name}></input>
+            </div>
+
+            <div class>
+            <label htmlFor='admin_email'>Email :</label>
+            <input class='form_input' type='email' name='email' id='admin_email' required='true' placeholder={adminToUpdate.email}></input>
+            </div>
+
+            <div class ='flex checkbox_div'>
+            <label htmlFor='super_admin'>Super Admin :</label>
+            <input class='form_input_checkbox'type='checkbox' name='superadmin' ></input>
+            </div>
+            <div class='flex'>
+            <button class='btn-primary-small-text' type='submit' >Update</button>
+            <button class='btn-secondary-small-text' onClick={closeModal}>Close</button>
+            </div>
+            
+        </div>
+        </form>
+        
+      </Modal>
     <div class='flex dashboard_header'>
       <h1>Admins</h1>
       <div class='flex '>
@@ -191,30 +313,49 @@ function AdminsBody() {
     >
       {showTable && <table>
         <thead>
-        <tr>
+        <tr class='row_header'>
             <th>Admins</th>
-            <th>Role</th>
             <th>Permissions</th>
+            <th>Role</th>
             <th>Active</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        {/* <tr>
+        {/* <tr class='row_body'>
             <td>Atif</td>
             <td>View,Edit</td>
             <td>SuperAdmin</td>
+            <td><ReactSwitch
+            checked='true'/></td>
+            <td><div >
+            <img class="pencil_icon" src='../media/icons/pencil.svg' height='22px' width='22px'></img> 
+            <img class="trash_icon" src='../media/icons/trash.svg' height='22px' width='22px'></img> 
+              </div></td>
+            
+        </tr>
+        <tr class='row_body'>
+            <td>Atif-2</td>
+            <td>View,Edit,Create</td>
+            <td>SuperAdmin</td>
             <td>Yes</td>
             <td>-</td>
+            
         </tr> */}
         {tableData.map((value)=>{
           return(
-            <tr>
-              <td>{value.name}</td>
+            <tr class='row_body' >
+              <td >{value.name}</td>
+              <td>-</td>
               <td>{value.superadmin?'SuperAdmin':'Admin'}</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
+              <td ><ReactSwitch
+            checked={value.active}
+            onChange={(checked)=>handleReactSwitch(checked,value.id)}/></td>
+              <td><div >
+            <img class="pencil_icon" src='../media/icons/pencil.svg' height='22px' width='22px' onClick={()=>{SetadminToUpdate(value)
+            SetUpdatemodalIsOpen(true)}}></img> 
+            <img class="trash_icon" src='../media/icons/trash.svg' height='22px' width='22px' onClick={()=>deleteDB(value.id)}></img> 
+              </div></td>
               
             </tr>
           )

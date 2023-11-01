@@ -30,6 +30,7 @@ const closePopup=()=>{
 
 
 const checkAdmin=(user)=>{
+  var Validatinguser={};
   const q = query(collectionRef, where("email", "==", `${user.email}`));
   getDocs(q)
   .then((querySnapshot)=>{
@@ -40,14 +41,17 @@ const checkAdmin=(user)=>{
 
         const Userdata=doc.data();
         
-        const user={
+        const Validatinguser={
           id:doc.id,
           ...Userdata
         }
+        
+        if(Userdata.active==false)
+        throw new Error('Invalid Admin')
 
-        console.log(doc.id, " => ", user);
+        console.log(doc.id, " => ", Validatinguser);
 
-        dispatch(SetCurrentUser(user))
+        dispatch(SetCurrentUser(Validatinguser))
         
       });
 
@@ -58,15 +62,14 @@ const checkAdmin=(user)=>{
       dispatch(SetLoader(false));
       
       
-    } else {
-      console.log('Not Valid Admin');
+    } else 
+      throw new Error('Invalid Admin')
+  })
+  .catch((err)=>{
+    console.log('Not Valid Admin');
       signOut(auth);
       setShowpopup(true);
       dispatch(SetLoader(false));
-
-      
-
-    }
   })
   
 }

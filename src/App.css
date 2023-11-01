@@ -199,20 +199,52 @@ li{
   margin: 10px 30px 0 30px;
 }
 
+table{
+  width:95%;
+}
+
 
 table,th,td{
   /* border: 1px solid; */
   font-size: medium;
-  border-collapse: collapse;
-  width:100%;
+  /* border-collapse: collapse; */
+  /* width:95%; */
   margin-left:30px;
   margin-right:30px;
+  border-collapse:separate;
+  border-spacing:0 10px;
+  
 }
 
+
 td,th{
-  padding:5px 5px 5px 5px;
-  width:150px;
+  padding:10px 15px 10px 15px;
+  /* width:150px; */
+  height:50px;
+  
 }
+td{
+  font-weight: 500;
+}
+td:first-child {
+  /* border-left-style: solid; */
+  border-top-left-radius: 10px; 
+  border-bottom-left-radius: 10px;
+}
+td:last-child {
+  /* border-right-style: solid; */
+  border-bottom-right-radius: 10px; 
+  border-top-right-radius: 10px; 
+}
+
+.row_body{
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  margin-top: 20px;
+ 
+}
+
+
 
 form{
 
@@ -242,6 +274,8 @@ input{
 
 }
 
+
+
 .admin_form{
   gap:20px!important
 }
@@ -266,4 +300,13 @@ input{
 
 .checkbox_div{
   align-items: center;
+}
+
+.pencil_icon{
+  margin-right: 20px;
+  cursor:pointer;
+}
+
+.trash_icon{
+  cursor:pointer;
 }
