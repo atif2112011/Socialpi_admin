@@ -1,5 +1,5 @@
 import { getAuth, signOut } from 'firebase/auth'
-import { QuerySnapshot, addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { QuerySnapshot, addDoc, collection, deleteDoc, doc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -49,7 +49,8 @@ function AdminsBody() {
       SetshowTable(false);
       setAdmins([]);
       SettableData([]);
-      const querySnapshot = await getDocs(collection(database, "admins"));
+      const q=query(collection(database, "admins"),orderBy("name"))
+      const querySnapshot = await getDocs(q);
       console.log("Fetched Admins:")
       let newAdmins = [];
       querySnapshot.forEach((doc) => {
@@ -127,7 +128,12 @@ function AdminsBody() {
             name:formData.get('name'),
             email:formData.get('email'),
             superadmin:superadmin,
-            active:true
+            active:true,
+            permissions:{
+              create:false,
+              edit:false,
+              view:true
+            }
             
         }
 
@@ -165,11 +171,25 @@ function AdminsBody() {
     const formData = new FormData(event.target); // 
     var superadmin = formData.get('superadmin'); // Get the value of the 'superadmin' checkbox
     superadmin==null?superadmin=false:superadmin=true
+
+    var create = formData.get('create'); // Get the value of the 'superadmin' checkbox
+    create==null?create=false:create=true
+
+    var view = formData.get('view'); // Get the value of the 'superadmin' checkbox
+    view==null?view=false:view=true
+
+    var edit = formData.get('edit'); // Get the value of the 'superadmin' checkbox
+    edit==null?edit=false:edit=true
   
           const UserData={
               name:formData.get('name'),
               email:formData.get('email'),
               superadmin:superadmin,
+              permissions:{
+                create:create,
+                view:view,
+                edit:edit
+              }
 
               
           }
@@ -184,6 +204,12 @@ function AdminsBody() {
           
           
   
+      }
+
+
+      const populateUpdateModal=(user)=>{
+        document.getElementById('update_admin_name').value='hi'
+
       }
       
 
@@ -228,7 +254,7 @@ function AdminsBody() {
         populateAdmins();
        },[])
 
-       
+       var permission='';
 
   return (
     <div class='flex-col dashboard'>
@@ -274,19 +300,49 @@ function AdminsBody() {
         <form onSubmit={handleUpdateFormSubmit}>
         <div class='flex-col admin_form'>
             <div class>
-            <label htmlFor='admin_name'>Admin Name :</label>
-            <input class='form_input' type='text' name='name' id='admin_name' required='true' placeholder={adminToUpdate.name}></input>
+            <label htmlFor='name'>Admin Name :</label>
+            <input class='form_input' type='text' name='name' id='update_admin_name' required='true' placeholder={adminToUpdate.name}></input>
             </div>
 
             <div class>
-            <label htmlFor='admin_email'>Email :</label>
-            <input class='form_input' type='email' name='email' id='admin_email' required='true' placeholder={adminToUpdate.email}></input>
+            <label htmlFor='email'>Email :</label>
+            <input class='form_input' type='email' name='email' id='update_admin_email' required='true' placeholder={adminToUpdate.email}></input>
             </div>
 
-            <div class ='flex checkbox_div'>
-            <label htmlFor='super_admin'>Super Admin :</label>
-            <input class='form_input_checkbox'type='checkbox' name='superadmin' ></input>
+            <div >
+              <span>Permissions :</span>
+            <div class ='flex permissions_checkboxes'>
+
+              <div class='flex checkbox_div'>
+              <label htmlFor='super_admin'>Super Admin :</label>
+            <input class='form_input_checkbox'type='checkbox' name='superadmin' id='update_superadmin' ></input>
+              </div>
+
+            <div class='flex checkbox_div'>
+            <label htmlFor='create'>Create :</label>
+            <input class='form_input_checkbox'type='checkbox' name='create' id='update_create'></input>
             </div>
+
+            <div class='flex checkbox_div'>
+            <label htmlFor='view'>View :</label>
+            <input class='form_input_checkbox'type='checkbox' name='view' id='update_view' ></input>
+            </div>
+
+
+            <div class='flex checkbox_div'>
+            <label htmlFor='edit'>Edit :</label>
+            <input class='form_input_checkbox'type='checkbox' name='edit' id='update_edit'></input>
+            </div>
+
+           
+            </div>
+           
+           
+           
+            </div>
+
+            
+
             <div class='flex'>
             <button class='btn-primary-small-text' type='submit' >Update</button>
             <button class='btn-secondary-small-text' onClick={closeModal}>Close</button>
@@ -299,8 +355,8 @@ function AdminsBody() {
     <div class='flex dashboard_header'>
       <h1>Admins</h1>
       <div class='flex '>
-        <button class='btn-primary-small-button-icon'
-        onClick={AddAdminButtonAction}
+        <button class='btn-primary-small-button-icon addAdminBtn'
+        onClick={AddAdminButtonAction} disabled={!CurrentUser.permissions.create}
         >Add Admin
         <img class="menu_icon" src='../media/icons/add.svg' height='20px' width='20px' style={{filter: 'invert(1)'}}></img>
          </button>
@@ -344,18 +400,22 @@ function AdminsBody() {
         </tr> */}
         {tableData.map((value)=>{
           return(
-            <tr class='row_body' >
+            <tr class={CurrentUser.permissions.edit?'row_body':'row_body unclickable'} >
               <td >{value.name}</td>
-              <td>-</td>
+              <td>{value.permissions?Object.keys(value.permissions).filter(key => value.permissions[key]).join(' '):'-'}</td>
               <td>{value.superadmin?'SuperAdmin':'Admin'}</td>
               <td ><ReactSwitch
             checked={value.active}
-            onChange={(checked)=>handleReactSwitch(checked,value.id)}/></td>
-              <td><div >
-            <img class="pencil_icon" src='../media/icons/pencil.svg' height='22px' width='22px' onClick={()=>{SetadminToUpdate(value)
-            SetUpdatemodalIsOpen(true)}}></img> 
+            onChange={(checked)=>handleReactSwitch(checked,value.id)}
+            /></td>
+              <td>
+                {CurrentUser.permissions.edit?<div >
+            <img class="pencil_icon" src='../media/icons/pencil.svg' height='22px' width='22px'  onClick={()=>{SetadminToUpdate(value)
+            SetUpdatemodalIsOpen(true) 
+            populateUpdateModal(value)}}></img> 
             <img class="trash_icon" src='../media/icons/trash.svg' height='22px' width='22px' onClick={()=>deleteDB(value.id)}></img> 
-              </div></td>
+              </div>:<div>-</div>}
+              </td>
               
             </tr>
           )

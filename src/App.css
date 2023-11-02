@@ -199,6 +199,13 @@ li{
   margin: 10px 30px 0 30px;
 }
 
+.addAdminBtn:disabled{
+
+
+  cursor: not-allowed; 
+  display: none;
+}
+
 table{
   width:95%;
 }
@@ -235,6 +242,10 @@ td:last-child {
   /* border-right-style: solid; */
   border-bottom-right-radius: 10px; 
   border-top-right-radius: 10px; 
+}
+
+.unclickable {
+  pointer-events: none;
 }
 
 .row_body{
@@ -300,6 +311,14 @@ input{
 
 .checkbox_div{
   align-items: center;
+}
+
+
+.permissions_checkboxes
+{
+  /* gap:15px !important; */
+  justify-content: space-between;
+  margin-top: 3px;
 }
 
 .pencil_icon{
