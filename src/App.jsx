@@ -1,15 +1,11 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import './App.css'
 import Samplebuttons from '../components/Samplebuttons'
 import Maindash from './../components/MaindashNew';
-import Mainmenu from '../components/DashMenu'
 import Spinner from '../components/Spinner'
 import Login from '../components/LoginNew';
-import DashBody from '../components/DashBody';
 import AdminsBody from '../components/menu-routes/AdminsBody';
 import BillsBody from '../components/menu-routes/BillsBody';
 import DashboardBody from '../components/menu-routes/DashboardBody';
@@ -34,6 +30,7 @@ function App() {
         
       </Route>
       <Route path="/dashboard" element={<Maindash/>}>
+        <Route path="/dashboard/" element={<AdminsBody/>}/>
         <Route path="/dashboard/admins" element={<AdminsBody />}/>
         <Route path="/dashboard/bills" element={<BillsBody/>}/>
         <Route path="/dashboard/dashboard" element={<DashboardBody/>}/>

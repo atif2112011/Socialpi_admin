@@ -7,6 +7,7 @@ import { database } from '../../src/firebaseConfig';
 import Modal from 'react-modal'
 import { SetLoader } from '../../redux/loadersSlice';
 import ReactSwitch from 'react-switch';
+import { updateDB,deleteDB, addDB } from '../../db/db';
 
 
 function AdminsBody() {
@@ -71,99 +72,44 @@ function AdminsBody() {
     
   }
 
-  const updateDB=(userId,payload)=>{
+  const updateAdmin = async (userId, payload) => {
+    const success = await updateDB(userId, payload);
+    if (success) {
+        console.log("Data Updated");
+        await populateAdmins();
+        closeModal();
+    }
+}
 
-    const Ref = doc(database, "admins", userId);
-      
-    updateDoc(Ref,payload
-      )
-      .then((response)=>{
-        console.log("Data Updated")
-         populateAdmins();
-         closeModal();
-         
-         
-         
-        })
-        .catch((err)=>{
-          alert(err.message)
-          
-        })
-        
-        
-    
+const deleteAdmin = async (userId) => {
+  dispatch(SetLoader(true));
+  const success = await deleteDB(userId);
+  if (success) {
+      console.log("Data Deleted");
+      await populateAdmins();
   }
+}
 
-  const deleteDB=(userId)=>{
-    dispatch(SetLoader(true))
-    const Ref = doc(database, "admins", userId);
-    deleteDoc(Ref
-      )
-      .then((response)=>{
-        console.log("Data Deleted")
-         populateAdmins();
-         
-         
-         
-        })
-        .catch((err)=>{
-          alert(err.message)
-          
-        })
-  }
-
-    const AddAdminButtonAction =()=>{
-        console.log('button Clicked')
-        SetmodalIsOpen(true)
-    } 
    
-    const handleFormSubmit=async(event)=>{
-    event.preventDefault(); // Prevents the default form submission behavior
-
-  const formData = new FormData(event.target); // 
-  var superadmin = formData.get('superadmin'); // Get the value of the 'superadmin' checkbox
-  superadmin==null?superadmin=false:superadmin=true
-
-        const UserData={
-            name:formData.get('name'),
-            email:formData.get('email'),
-            superadmin:superadmin,
-            active:true,
-            permissions:{
-              create:false,
-              edit:false,
-              view:true
-            }
-            
-        }
-
-        const q = query(collectionRef, where("email", "==", `${UserData.email}`));
-
-        getDocs(q)
-        .then(async (querySnapshot)=>{
-          if(!querySnapshot.empty){
-              alert("Email Already Exists!!")
-              
-              document.getElementById("admin_email").focus();
-
-          }
-          else
-          {
-            const docRef = await addDoc(collection(database, "admins"),UserData);
-          console.log("Document written with ID: ", docRef.id);
-
+    const AddNewAdmin = async (event) => {
+      event.preventDefault(); 
+  
+      const formData = new FormData(event.target);
+      const superadmin = formData.get('superadmin');
+  
+      const success = await addDB({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          superadmin: superadmin,
+      });
+  
+      if (success) {
           closeModal();
           dispatch(SetLoader(true));
           await populateAdmins();
           dispatch(SetLoader(false));
-          }
-        })
-        
-        
-        
-        
-
-    }
+      }
+  }
 
     const handleUpdateFormSubmit=async(event)=>{
       event.preventDefault(); // Prevents the default form submission behavior
@@ -194,7 +140,7 @@ function AdminsBody() {
               
           }
 
-          await updateDB(adminToUpdate.id,UserData)
+          await updateAdmin(adminToUpdate.id,UserData)
            
           
 
@@ -206,49 +152,26 @@ function AdminsBody() {
   
       }
 
-
-      const populateUpdateModal=(user)=>{
-        document.getElementById('update_admin_name').value='hi'
-
-      }
       
 
     const handleReactSwitch=async(checked,id)=>{
       dispatch(SetLoader(true))
       
-      
-      
       const DatatoUpdate={
         active:checked
       }
-    await updateDB(id,DatatoUpdate)
+    await updateAdmin(id,DatatoUpdate)
     
       
     }
       
-    function closeModal() {
+    const closeModal=()=>{
     SetmodalIsOpen(false);
     SetUpdatemodalIsOpen(false)
     }
 
 
-    // const queryDB=async(e)=>{
-       
-    //     const value=e.target.value;
-    //     console.log("Value",value)
-
-    //     const q = query(collectionRef, where("name", "==", `${value}`)); 
-
-    //     try {
-    //         const querySnapshot = await getDocs(q);
-    //         console.log('Queried Data');
-    //         querySnapshot.forEach((doc) => {
-    //           console.log(doc.id , " => ", doc.data());
-    //         });
-    //       } catch (error) {
-    //         console.error("Error querying data:", error);
-    //       }
-    // }
+  
 
     useEffect(()=>{
         populateAdmins();
@@ -265,7 +188,7 @@ function AdminsBody() {
         className="Modal"
       >
         <h2>Add New Admin</h2>
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={AddNewAdmin}>
         <div class='flex-col admin_form'>
             <div class>
             <label htmlFor='admin_name'>Admin Name :</label>
@@ -356,7 +279,7 @@ function AdminsBody() {
       <h1>Admins</h1>
       <div class='flex '>
         <button class='btn-primary-small-button-icon addAdminBtn'
-        onClick={AddAdminButtonAction} disabled={!CurrentUser.permissions.create}
+        onClick={()=>SetmodalIsOpen(true)} disabled={!CurrentUser.permissions.create}
         >Add Admin
         <img class="menu_icon" src='../media/icons/add.svg' height='20px' width='20px' style={{filter: 'invert(1)'}}></img>
          </button>
@@ -413,7 +336,7 @@ function AdminsBody() {
             <img class="pencil_icon" src='../media/icons/pencil.svg' height='22px' width='22px'  onClick={()=>{SetadminToUpdate(value)
             SetUpdatemodalIsOpen(true) 
             populateUpdateModal(value)}}></img> 
-            <img class="trash_icon" src='../media/icons/trash.svg' height='22px' width='22px' onClick={()=>deleteDB(value.id)}></img> 
+            <img class="trash_icon" src='../media/icons/trash.svg' height='22px' width='22px' onClick={()=>deleteAdmin(value.id)}></img> 
               </div>:<div>-</div>}
               </td>
               

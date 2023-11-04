@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import DashMenu from './DashMenu'
-import DashBody from './DashBody'
+// import DashBody from './DashBody'
 import { useDispatch, useSelector } from 'react-redux'
 import {SetLoader} from '../redux/loadersSlice'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
