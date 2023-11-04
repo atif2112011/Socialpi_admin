@@ -325,7 +325,7 @@ const deleteAdmin = async (userId) => {
           return(
             <tr class={CurrentUser.permissions.edit?'row_body':'row_body unclickable'} >
               <td >{value.name}</td>
-              <td>{value.permissions?Object.keys(value.permissions).filter(key => value.permissions[key]).join(' '):'-'}</td>
+              <td>{value.permissions?Object.keys(value.permissions).sort().filter(key => value.permissions[key]).join(' '):'-'}</td>
               <td>{value.superadmin?'SuperAdmin':'Admin'}</td>
               <td ><ReactSwitch
             checked={value.active}
