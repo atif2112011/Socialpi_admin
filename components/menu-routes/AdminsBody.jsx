@@ -10,6 +10,7 @@ import ReactSwitch from 'react-switch';
 import { updateDB,deleteDB, addDB } from '../../db/db';
 
 
+
 function AdminsBody() {
 
     const navigate=useNavigate();
@@ -72,23 +73,70 @@ function AdminsBody() {
     
   }
 
-  const updateAdmin = async (userId, payload) => {
-    const success = await updateDB(userId, payload);
-    if (success) {
-        console.log("Data Updated");
-        await populateAdmins();
-        closeModal();
-    }
-}
+//   const updateAdmin = async (userId, payload) => {
+//     const success = await updateDB(userId, payload);
+//     if (success) {
+//         console.log("Data Updated");
+//         await populateAdmins();
+//         closeModal();
+//     }
+// }
 
-const deleteAdmin = async (userId) => {
-  dispatch(SetLoader(true));
-  const success = await deleteDB(userId);
+
+
+// const deleteAdmin = async (userId) => {
+//   dispatch(SetLoader(true));
+//   const success = await deleteDB(userId);
+//   if (success) {
+//       console.log("Data Deleted");
+//       await populateAdmins();
+//   }
+
+
+const updateAdmin = async (userId, payload) => {
+  const success = await updateDB(userId, payload);
   if (success) {
-      console.log("Data Deleted");
-      await populateAdmins();
+    console.log("Data Updated");
+
+    // Find the index of the updated admin in the admins array
+    const updatedAdminIndex = admins.findIndex(admin => admin.id === userId);
+
+    if (updatedAdminIndex !== -1) {
+      // Create a new array with the updated admin data
+      const updatedAdmins = [...admins];
+      updatedAdmins[updatedAdminIndex] = { ...updatedAdmins[updatedAdminIndex], ...payload };
+      
+
+      // Update the state with the new admin data
+      setAdmins(updatedAdmins);
+      SettableData(updatedAdmins);
+    }
+
+    closeModal();
   }
 }
+
+
+
+const deleteAdmin = async (userId) => {
+  // dispatch(SetLoader(true)); // Assuming this sets a loading state
+
+  const success = await deleteDB(userId); // Assuming deleteDB is a function that handles deletion
+
+  if (success) {
+    console.log("Data Deleted");
+
+    // Filter out the deleted admin from the admins array
+    const updatedAdmins = admins.filter(admin => admin.id !== userId);
+
+    // Update the state with the new admin data (excluding the deleted admin)
+    setAdmins(updatedAdmins);
+    SettableData(updatedAdmins);
+  }
+
+  
+}
+
 
    
     const AddNewAdmin = async (event) => {
@@ -155,7 +203,7 @@ const deleteAdmin = async (userId) => {
       
 
     const handleReactSwitch=async(checked,id)=>{
-      dispatch(SetLoader(true))
+      // dispatch(SetLoader(true))
       
       const DatatoUpdate={
         active:checked
@@ -181,6 +229,7 @@ const deleteAdmin = async (userId) => {
 
   return (
     <div class='flex-col dashboard'>
+     
         <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
