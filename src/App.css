@@ -160,12 +160,12 @@ flex-direction: column;
 
 .menu_list{
   list-style-type: none;
-  padding-left: 16%;
   list-style-position: inside;
-  text-align: left;
+  /* text-align: left; */
+  font-style: 'Poppins';
 }
 
-li{
+/* li{
   margin-bottom: 15px;
   background-color: white;
   margin-left: -10%;
@@ -176,7 +176,7 @@ li{
   border-radius: 5px;
   cursor: pointer;
   
-}
+} */
 
 .menu_icon{
   margin-right: 15px;
@@ -328,4 +328,35 @@ input{
 
 .trash_icon{
   cursor:pointer;
+}
+
+.menu_list_item{
+  font-size: medium;
+  color: black;
+  font-family: 'Poppins';
+  font-style: normal;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+
+}
+
+a{
+  text-decoration: none;
+  color: black;
+  padding: 10px 10px 10px 30px;
+  margin: 5px 10px 5px 10px;
+  display: flex;
+  align-items:center;
+  justify-content: left;
+  gap: 10px;
+}
+
+.active{
+  background-color: rgb(209, 225, 240);
+  padding: 10px 10px 10px 30px;
+  margin: 5px 10px 5px 10px;
+  border-radius: 5px;
 }

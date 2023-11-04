@@ -3,9 +3,9 @@ import { QuerySnapshot, addDoc, collection, deleteDoc, doc, getDocs, orderBy, qu
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { database } from '../src/firebaseConfig';
+import { database } from '../../src/firebaseConfig';
 import Modal from 'react-modal'
-import { SetLoader } from '../redux/loadersSlice';
+import { SetLoader } from '../../redux/loadersSlice';
 import ReactSwitch from 'react-switch';
 
 

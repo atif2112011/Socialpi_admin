@@ -4,7 +4,7 @@ import DashBody from './DashBody'
 import { useDispatch, useSelector } from 'react-redux'
 import {SetLoader} from '../redux/loadersSlice'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { SetCurrentUser } from '../redux/userSlice'
 import { collection, doc, getDocs, query, where } from 'firebase/firestore'
 import { database } from '../src/firebaseConfig'
@@ -103,8 +103,11 @@ SetshowTable(true);
   
   return (
     <div class='flex maindash' >
-        <DashMenu selectedOption={selectedOption} setSelectedOption={setSelectedOption}/>
-        <DashBody selectedOption={selectedOption} setSelectedOption={setSelectedOption}/>
+        
+      <DashMenu/>
+      {CurrentUser && <div>
+        <Outlet/>
+      </div>}
 
     </div>
   )
