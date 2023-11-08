@@ -14,6 +14,11 @@ function Login() {
   
   const auth = getAuth();
   const GoogleProvider= new GoogleAuthProvider();
+
+  GoogleProvider.setCustomParameters({
+    prompt: 'select_account'
+  });
+  
   const collectionRef=collection(database,'admins')
 
   const dispatch=useDispatch();
@@ -22,6 +27,8 @@ function Login() {
 
 
 
+  //For firebase login
+  
 
 const closePopup=()=>{
   setShowpopup(false); 

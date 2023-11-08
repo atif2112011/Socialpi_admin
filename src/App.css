@@ -374,9 +374,13 @@ a{
   background-color: #f0f0f0 !important;
 }
 
+.menu_logo{
+  margin-left: 10px;
+}
+
 .menusignout{
   margin-bottom: 15px;
-  background-color: white !important;
+  background-color: transparent !important;
   color:black !important;
   border:none;
   font-family: "Poppins";
@@ -385,11 +389,12 @@ a{
   display: flex;
   align-items: center;
   gap:10px;
+  cursor: pointer;
 }
 
 .menusignout:hover{
   margin-bottom: 15px;
-  background-color: white !important;
+  background-color:transparent !important;
   color:black !important;
   border:none;
   font-family: "Poppins";

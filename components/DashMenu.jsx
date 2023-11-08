@@ -2,6 +2,7 @@ import { getAuth, signOut } from 'firebase/auth';
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 
+
 function DashMenu() {
 
   const options=[{
@@ -37,9 +38,8 @@ function DashMenu() {
 ]
   const auth=getAuth();
   const navigate=useNavigate();
-  const handleClick=(value)=>{
-    setSelectedOption(value);
-  }
+
+  
 
   const handleLogout=async ()=>{
     await signOut(auth);
@@ -52,7 +52,7 @@ function DashMenu() {
     <div class='flex-col menu'>
       <div>
       <div class="flex logo">
-        <img src="../media/icons/Logo.svg"></img> 
+        <img src="../media/icons/Logo.svg" class="menu_logo"></img> 
         <button class="btn-primary-small-icon bell_btn"><img src="../media/icons/bell.svg" height='20px' width='20px'></img></button>
       </div>
       <hr/>
@@ -71,7 +71,7 @@ function DashMenu() {
 
       </div>
           <div class='flex menu_signout'>
-          <button class="menusignout" onClick={handleLogout}><img src="../media/icons/Logout.svg" height="20" width='20px'></img>Sign Out</button>
+          <button class="menusignout" onClick={handleLogout}><img src="../media/icons/Logout.svg" height="20" width='20px' ></img>Sign Out</button>
           </div>
       
 
