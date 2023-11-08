@@ -24,6 +24,14 @@ function AdminsBody() {
    const [UpdatemodalIsOpen, SetUpdatemodalIsOpen] = useState(false);
    const [adminToUpdate,SetadminToUpdate]=useState({})
    const [tableData,SettableData]=useState([])
+   const [formData, SetFormData] = useState({
+    name: '',
+    email: '',
+    superadmin: false,
+    create: false,
+    view: false,
+    edit: false
+  });
 
    const collectionRef=collection(database,'admins')
 
@@ -141,14 +149,18 @@ const deleteAdmin = async (userId) => {
    
     const AddNewAdmin = async (event) => {
       event.preventDefault(); 
-  
-      const formData = new FormData(event.target);
-      const superadmin = formData.get('superadmin');
+      
+
+      
+    
   
       const success = await addDB({
-          name: formData.get('name'),
-          email: formData.get('email'),
-          superadmin: superadmin,
+          name: formData.name,
+          email: formData.email,
+          superadmin: formData.superadmin,
+          create: formData.create,
+          view: formData.view,
+          edit: formData.edit
       });
   
       if (success) {
@@ -162,27 +174,14 @@ const deleteAdmin = async (userId) => {
     const handleUpdateFormSubmit=async(event)=>{
       event.preventDefault(); // Prevents the default form submission behavior
   
-    const formData = new FormData(event.target); // 
-    var superadmin = formData.get('superadmin'); // Get the value of the 'superadmin' checkbox
-    superadmin==null?superadmin=false:superadmin=true
-
-    var create = formData.get('create'); // Get the value of the 'superadmin' checkbox
-    create==null?create=false:create=true
-
-    var view = formData.get('view'); // Get the value of the 'superadmin' checkbox
-    view==null?view=false:view=true
-
-    var edit = formData.get('edit'); // Get the value of the 'superadmin' checkbox
-    edit==null?edit=false:edit=true
-  
           const UserData={
-              name:formData.get('name'),
-              email:formData.get('email'),
-              superadmin:superadmin,
+              name:formData.name,
+              email:formData.email,
+              superadmin:formData.superadmin,
               permissions:{
-                create:create,
-                view:view,
-                edit:edit
+                create:formData.create,
+                view:formData.view,
+                edit:formData.edit
               }
 
               
@@ -219,13 +218,22 @@ const deleteAdmin = async (userId) => {
     }
 
 
-  
+    const populateUpdateModal=async (value)=>{
+        await SetFormData({
+          name:value.name,
+          email:value.email,
+          superadmin:value.superadmin,
+          create:value.permissions.create,
+          view:value.permissions.view,
+          edit:value.permissions.edit
+        })
+    }
 
     useEffect(()=>{
         populateAdmins();
        },[])
 
-       var permission='';
+      
 
   return (
     <div class='flex-col dashboard'>
@@ -241,18 +249,47 @@ const deleteAdmin = async (userId) => {
         <div class='flex-col admin_form'>
             <div class>
             <label htmlFor='admin_name'>Admin Name :</label>
-            <input class='form_input' type='text' name='name' id='admin_name' required='true'></input>
+            <input class='form_input' type='text' name='name' id='admin_name' required='true' value={formData.name} onChange={(e)=>SetFormData({...formData,name:e.target.value})}></input>
             </div>
 
             <div class>
             <label htmlFor='admin_email'>Email :</label>
-            <input class='form_input' type='email' name='email' id='admin_email' required='true'></input>
+            <input class='form_input' type='email' name='email' id='admin_email' required='true' value={formData.email} onChange={(e)=>SetFormData({...formData,email:e.target.value})}></input>
             </div>
 
-            <div class ='flex checkbox_div'>
-            <label htmlFor='super_admin'>Super Admin :</label>
-            <input class='form_input_checkbox'type='checkbox' name='superadmin' ></input>
+            <div >
+              <span>Permissions :</span>
+            <div class ='flex permissions_checkboxes'>
+
+              <div class='flex checkbox_div'>
+              <label htmlFor='super_admin'>Super Admin :</label>
+            <input class='form_input_checkbox'type='checkbox' name='superadmin' id='superadmin' checked={formData.superadmin} onChange={(e)=>SetFormData({...formData,superadmin:e.target.checked})}></input>
+              </div>
+
+            <div class='flex checkbox_div'>
+            <label htmlFor='create'>Create :</label>
+            <input class='form_input_checkbox'type='checkbox' name='create' id='create' checked={formData.create} onChange={(e)=>SetFormData({...formData,create:e.target.checked})}></input>
             </div>
+
+            <div class='flex checkbox_div'>
+            <label htmlFor='view'>View :</label>
+            <input class='form_input_checkbox'type='checkbox' name='view' id='view' checked={formData.view} 
+             onChange={(e)=>SetFormData({...formData,view:e.target.checked})}></input>
+            </div>
+
+
+            <div class='flex checkbox_div'>
+            <label htmlFor='edit'>Edit :</label>
+            <input class='form_input_checkbox'type='checkbox' name='edit' id='edit' checked={formData.edit} onChange={(e)=>SetFormData({...formData,edit:e.target.checked})} ></input>
+            </div>
+
+           
+            </div>
+           
+           
+           
+            </div>
+
             <div class='flex'>
             <button class='btn-primary-small-text' type='submit' >Submit</button>
             <button class='btn-secondary-small-text' onClick={closeModal}>Close</button>
@@ -273,12 +310,12 @@ const deleteAdmin = async (userId) => {
         <div class='flex-col admin_form'>
             <div class>
             <label htmlFor='name'>Admin Name :</label>
-            <input class='form_input' type='text' name='name' id='update_admin_name' required='true' placeholder={adminToUpdate.name}></input>
+            <input class='form_input' type='text' name='name' id='update_admin_name' required='true' value={formData.name} onChange={(e)=>SetFormData({...formData,name:e.target.value})}></input>
             </div>
 
             <div class>
             <label htmlFor='email'>Email :</label>
-            <input class='form_input' type='email' name='email' id='update_admin_email' required='true' placeholder={adminToUpdate.email}></input>
+            <input class='form_input' type='email' name='email' id='update_admin_email' required='true' value={formData.email} onChange={(e)=>SetFormData({...formData,email:e.target.value})}></input>
             </div>
 
             <div >
@@ -287,23 +324,24 @@ const deleteAdmin = async (userId) => {
 
               <div class='flex checkbox_div'>
               <label htmlFor='super_admin'>Super Admin :</label>
-            <input class='form_input_checkbox'type='checkbox' name='superadmin' id='update_superadmin' ></input>
+            <input class='form_input_checkbox'type='checkbox' name='superadmin' id='update_superadmin' checked={formData.superadmin} onChange={(e)=>SetFormData({...formData,superadmin:e.target.checked})}></input>
               </div>
 
             <div class='flex checkbox_div'>
             <label htmlFor='create'>Create :</label>
-            <input class='form_input_checkbox'type='checkbox' name='create' id='update_create'></input>
+            <input class='form_input_checkbox'type='checkbox' name='create' id='update_create' checked={formData.create} onChange={(e)=>SetFormData({...formData,create:e.target.checked})}></input>
             </div>
 
             <div class='flex checkbox_div'>
             <label htmlFor='view'>View :</label>
-            <input class='form_input_checkbox'type='checkbox' name='view' id='update_view' ></input>
+            <input class='form_input_checkbox'type='checkbox' name='view' id='update_view' checked={formData.view} 
+             onChange={(e)=>SetFormData({...formData,view:e.target.checked})}></input>
             </div>
 
 
             <div class='flex checkbox_div'>
             <label htmlFor='edit'>Edit :</label>
-            <input class='form_input_checkbox'type='checkbox' name='edit' id='update_edit'></input>
+            <input class='form_input_checkbox'type='checkbox' name='edit' id='update_edit' checked={formData.edit} onChange={(e)=>SetFormData({...formData,edit:e.target.checked})}></input>
             </div>
 
            
@@ -328,7 +366,19 @@ const deleteAdmin = async (userId) => {
       <h1>Admins</h1>
       <div class='flex '>
         <button class='btn-primary-small-button-icon addAdminBtn'
-        onClick={()=>SetmodalIsOpen(true)} disabled={!CurrentUser.permissions.create}
+        onClick={()=>{
+          SetFormData({
+            name: '',
+            email: '',
+            superadmin: false,
+            create: false,
+            view: true,
+            edit: false
+          })
+          SetmodalIsOpen(true)
+        }
+          
+          } disabled={!CurrentUser.permissions.create}
         >Add Admin
         <img class="menu_icon" src='../media/icons/add.svg' height='20px' width='20px' style={{filter: 'invert(1)'}}></img>
          </button>
@@ -382,9 +432,12 @@ const deleteAdmin = async (userId) => {
             /></td>
               <td>
                 {CurrentUser.permissions.edit?<div >
-            <img class="pencil_icon" src='../media/icons/pencil.svg' height='22px' width='22px'  onClick={()=>{SetadminToUpdate(value)
+            <img class="pencil_icon" src='../media/icons/pencil.svg' height='22px' width='22px'  onClick={()=>
+            { 
+              populateUpdateModal(value)
+            SetadminToUpdate(value)
             SetUpdatemodalIsOpen(true) 
-            populateUpdateModal(value)}}></img> 
+            }}></img> 
             <img class="trash_icon" src='../media/icons/trash.svg' height='22px' width='22px' onClick={()=>deleteAdmin(value.id)}></img> 
               </div>:<div>-</div>}
               </td>
