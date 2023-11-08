@@ -47,47 +47,13 @@ function DashMenu() {
   }
 
   return (
-    // <div class='flex-col menu'>
-    //   <div class="logo">
-    //     Logo
-    //   </div>
-    //   <hr/>
-    //   <div class="menu_options">
-
-    //     <ul class="menu_list">
-    //       {options.map((value)=>{
-    //           return <li 
-    //           key={value.name} 
-    //           onClick={()=>handleClick(value.name)}
-    //           style={{
-    //             backgroundColor: value.name === selectedOption ? '#e9ecff' : 'white',
-    //             display: 'flex', // Add this line
-    //             alignItems: 'center', // Add this line
-    //             padding: '8px' // Adjust padding as needed
-    //           }}
-    //           >
-                 
-    //           </li>
-    //       })}
-    //     </ul>
-
-    //   </div>
-    //       <div>
-    //       <button class="btn-primary-small-text menusignout" onClick={handleLogout}>Sign Out</button>
-    //       </div>
-      
-
-    // </div>
-
-    // <div>
-      // <NavLink to="/dashboard/admins">Component 1</NavLink>
-      // <NavLink to="/dashboard/bills">Component 2</NavLink>
-    // </div>
 
 
     <div class='flex-col menu'>
-      <div class="logo">
+      <div>
+      <div class="flex logo">
         <img src="../media/icons/Logo.svg"></img> 
+        <button class="btn-primary-small-icon bell_btn"><img src="../media/icons/bell.svg" height='20px' width='20px'></img></button>
       </div>
       <hr/>
       <div class="menu_options">
@@ -98,19 +64,14 @@ function DashMenu() {
         </NavLink>
       })}
         
-        {/* <NavLink to="/dashboard/admins">
-        <img src="../media/icons/list.svg" height='20px' width='20px'></img>
-        <span >Admins</span>
-        </NavLink>
-
-       <NavLink to="/dashboard/bills">
-        <img src="../media/icons/admins.svg" height='20px' width='20px'></img><span >Bills</span>
-        </NavLink> */}
+       
         
 
       </div>
-          <div>
-          <button class="btn-primary-small-text menusignout" onClick={handleLogout}>Sign Out</button>
+
+      </div>
+          <div class='flex menu_signout'>
+          <button class="menusignout" onClick={handleLogout}><img src="../media/icons/Logout.svg" height="20" width='20px'></img>Sign Out</button>
           </div>
       
 

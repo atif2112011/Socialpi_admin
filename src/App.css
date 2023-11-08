@@ -105,7 +105,7 @@ margin-right:20px;
 } */
 
 .close{
-  font-family: Poppins;
+  font-family: "Poppins";
   font-size: 14px;
   font-weight: 600;
   color: black;
@@ -145,7 +145,7 @@ margin-right:20px;
 
 
 .menu_options{
-font-family: Poppins;
+font-family: "Poppins";
 font-size: 18px;
 font-style: normal;
 font-weight: 500;
@@ -157,7 +157,9 @@ flex-direction: column;
 }
 
 .logo{
-  margin-top:20px
+  margin-top:20px;
+  justify-content: space-around;
+  align-items: center;
 }
 
 
@@ -186,6 +188,10 @@ flex-direction: column;
   margin-left: 0px;
 }
 
+
+.menu{
+  justify-content: space-between;
+}
 
 .search_admin{
  height:min-content;
@@ -362,4 +368,41 @@ a{
   padding: 10px 10px 10px 30px;
   margin: 5px 10px 5px 10px;
   border-radius: 5px;
+}
+
+.bell_btn{
+  background-color: #f0f0f0 !important;
+}
+
+.menusignout{
+  margin-bottom: 15px;
+  background-color: white !important;
+  color:black !important;
+  border:none;
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: large;
+  display: flex;
+  align-items: center;
+  gap:10px;
+}
+
+.menusignout:hover{
+  margin-bottom: 15px;
+  background-color: white !important;
+  color:black !important;
+  border:none;
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: large;
+  display: flex;
+  align-items: center;
+  gap:10px;
+  box-shadow:none;
+}
+
+.menu_signout{
+  justify-content: center;
+  align-items: center;
+ 
 }

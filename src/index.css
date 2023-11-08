@@ -88,7 +88,7 @@ button:hover {
   border-radius: 100px;
   border: 1px solid transparent;
   height: 36px;
-  /* width: 36px; */
+  width: 36px;
   color:white;
   font-size: 12px;
   font-weight: 600;
@@ -99,6 +99,9 @@ button:hover {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-primary-small-button-icon{
