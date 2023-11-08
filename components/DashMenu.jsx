@@ -87,7 +87,7 @@ function DashMenu() {
 
     <div class='flex-col menu'>
       <div class="logo">
-        Logo
+        <img src="../media/icons/Logo.svg"></img> 
       </div>
       <hr/>
       <div class="menu_options">
