@@ -380,7 +380,7 @@ const deleteAdmin = async (userId) => {
           
           } disabled={!CurrentUser.permissions.create}
         >Add Admin
-        <img class="menu_icon" src='../media/icons/add.svg' height='20px' width='20px' style={{filter: 'invert(1)'}}></img>
+        <img class="menu_icon" src='https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2Fadd.svg?alt=media&token=7f7c4fab-a9ea-425f-b02b-1d31657d3360' height='20px' width='20px' style={{filter: 'invert(1)'}}></img>
          </button>
         <input class='search_admin'type='text' placeholder='Search Admins....' onChange={(e)=>SearchHandler(e)}></input>
       </div>
@@ -407,8 +407,8 @@ const deleteAdmin = async (userId) => {
             <td><ReactSwitch
             checked='true'/></td>
             <td><div >
-            <img class="pencil_icon" src='../media/icons/pencil.svg' height='22px' width='22px'></img> 
-            <img class="trash_icon" src='../media/icons/trash.svg' height='22px' width='22px'></img> 
+            <img class="pencil_icon" src='https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2Fpencil.svg?alt=media&token=0f330f72-a556-48e9-b492-b1215374dbad' height='22px' width='22px'></img> 
+            <img class="trash_icon" src='https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2Ftrash.svg?alt=media&token=825c6084-d6d8-4250-8b9e-1389d1183322' height='22px' width='22px'></img> 
               </div></td>
             
         </tr>
@@ -432,13 +432,13 @@ const deleteAdmin = async (userId) => {
             /></td>
               <td>
                 {CurrentUser.permissions.edit?<div >
-            <img class="pencil_icon" src='../media/icons/pencil.svg' height='22px' width='22px'  onClick={()=>
+            <img class="pencil_icon" src='https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2Fpencil.svg?alt=media&token=0f330f72-a556-48e9-b492-b1215374dbad' height='22px' width='22px'  onClick={()=>
             { 
               populateUpdateModal(value)
             SetadminToUpdate(value)
             SetUpdatemodalIsOpen(true) 
             }}></img> 
-            <img class="trash_icon" src='../media/icons/trash.svg' height='22px' width='22px' onClick={()=>deleteAdmin(value.id)}></img> 
+            <img class="trash_icon" src='https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2Ftrash.svg?alt=media&token=825c6084-d6d8-4250-8b9e-1389d1183322' height='22px' width='22px' onClick={()=>deleteAdmin(value.id)}></img> 
               </div>:<div>-</div>}
               </td>
               
