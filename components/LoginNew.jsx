@@ -157,7 +157,7 @@ const checkAdmin=(user)=>{
         <div class="login-container flex-col">
             <h2>Login or Signup</h2>
             <button class="login-signin-btn" onClick={handleLogin} >
-                <img src="../media/google logo.png" height='40' width='40' alt="google sign in"/><span>Continue with Google</span>
+                <img src="https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2Fgoogle%20logo.png?alt=media&token=29e94f50-56ff-4902-90bb-f3a6badf773e" height='40' width='40' alt="google sign in"/><span>Continue with Google</span>
 
                 </button>
             <span class='login-footer'>By continuing, you agree to our <b>Terms of Use</b>.<br></br>Read our <b>Privacy Policy</b> .</span>
