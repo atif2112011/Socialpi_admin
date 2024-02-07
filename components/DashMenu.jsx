@@ -8,32 +8,32 @@ function DashMenu() {
   const options=[{
     link:"/dashboard/dashboard",
     name:'Dashboard',
-    icon:"../media/icons/dashboard.svg"
+    icon:"https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2Fdashboard.svg?alt=media&token=faa40991-2f12-4d74-8029-f8c70f0be94f"
   },
   {
     link:"/dashboard/stores",
     name:'Stores',
-    icon:"../media/icons/warehouse.svg"
+    icon:"https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2Fwarehouse.svg?alt=media&token=dc0eab20-2a27-4b5a-8ba7-1d829feb52db"
   },
   {
     link:"/dashboard/bills",
     name:'Bills',
-    icon:"../media/icons/list.svg"
+    icon:"https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2Flist.svg?alt=media&token=dcba96bb-3ed2-40ec-8fec-3163112be0b9"
   },
   {
     link:"/dashboard/admins",
     name:'Admins',
-    icon:"../media/icons/admins.svg"
+    icon:"https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2Fadmins.svg?alt=media&token=be964650-7db4-4f7c-a2aa-b54f0a1729d1"
   },
   {
     link:"/dashboard/revenue",
     name:'Revenue',
-    icon:"../media/icons/wallet.svg"
+    icon:"https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2Fwallet.svg?alt=media&token=c59766d2-6c7d-4852-8f18-f93552294a99"
   },
   {
     link:"/dashboard/settings",
     name:'Settings',
-    icon:"../media/icons/setting.png"
+    icon:"https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2Fsetting.png?alt=media&token=8cb6c051-6d32-48cf-b97b-f502857e6ab0"
   },
 ]
   const auth=getAuth();
