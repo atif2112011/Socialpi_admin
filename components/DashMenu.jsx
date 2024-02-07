@@ -53,7 +53,7 @@ function DashMenu() {
       <div>
       <div class="flex logo">
         <img src="https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2FLogo.svg?alt=media&token=56cf1e93-0df3-4052-b117-2906b5e1e0f0" class="menu_logo"></img> 
-        <button class="btn-primary-small-icon bell_btn"><img src="../media/icons/bell.svg" height='20px' width='20px'></img></button>
+        <button class="btn-primary-small-icon bell_btn"><img src="https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2Fbell.svg?alt=media&token=cd792631-6bfc-404d-a092-a94a47c23ce2" height='20px' width='20px'></img></button>
       </div>
       <hr/>
       <div class="menu_options">
@@ -71,7 +71,7 @@ function DashMenu() {
 
       </div>
           <div class='flex menu_signout'>
-          <button class="menusignout" onClick={handleLogout}><img src="../media/icons/Logout.svg" height="20" width='20px' ></img>Sign Out</button>
+          <button class="menusignout" onClick={handleLogout}><img src="https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2FLogout.svg?alt=media&token=514b81c5-4281-4dc9-850f-10d7b9e08b09" height="20" width='20px' ></img>Sign Out</button>
           </div>
       
 
