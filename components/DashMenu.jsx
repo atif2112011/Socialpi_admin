@@ -52,7 +52,7 @@ function DashMenu() {
     <div class='flex-col menu'>
       <div>
       <div class="flex logo">
-        <img src="../media/icons/Logo.svg" class="menu_logo"></img> 
+        <img src="https://firebasestorage.googleapis.com/v0/b/fir-frontend-8cae2.appspot.com/o/icons%2FLogo.svg?alt=media&token=56cf1e93-0df3-4052-b117-2906b5e1e0f0" class="menu_logo"></img> 
         <button class="btn-primary-small-icon bell_btn"><img src="../media/icons/bell.svg" height='20px' width='20px'></img></button>
       </div>
       <hr/>
